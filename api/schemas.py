@@ -26,6 +26,10 @@ class Provision(ProvisionBase):
         orm_mode = True
 
 
+class ProvisionResults(BaseModel):
+    series: Sequence[Provision]
+
+
 class BaseStationBase(BaseModel):
     pass
 
@@ -40,6 +44,10 @@ class BaseStation(BaseStationBase):
 
     class Config:
         orm_mode = True
+
+
+class BaseStationResults(BaseModel):
+    base_station: Sequence[BaseStation]
 
 
 class TimestepBase(BaseModel):
@@ -58,3 +66,7 @@ class Timestep(TimestepBase):
 
     class Config:
         orm_mode = True
+
+
+class TiemstepResults(BaseModel):
+    time_series: Sequence[Timestep]

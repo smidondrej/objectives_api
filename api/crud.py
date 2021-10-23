@@ -5,8 +5,8 @@ from sqlalchemy.orm import Session
 from . import models
 
 
-def get_bs(db: Session, bs_id: int):
-    return db.query(models.BaseStation).filter(models.BaseStation.id == bs_id).all()
+def get_bs(db: Session, bs_id: int) -> Optional[models.BaseStation]:
+    return db.query(models.BaseStation).filter(models.BaseStation.id == bs_id).first()
 
 def get_bs_provision(db: Session, bs_id: int, time: Optional[int] = None, window: Optional[int] = None):
     if window is None and time is not None:
