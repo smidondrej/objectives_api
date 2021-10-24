@@ -22,6 +22,14 @@ def get_db():
         db.close()
 
 
+@api_router.get("/bs", status_code=200, response_model=schemas.BaseStationResults)
+def read_bs(db: Session = Depends(get_db)):
+    db_bs = crud.get_bs(db)
+    if db_bs is None:
+        raise HTTPException(status_code=404, detail="Base station not found")
+    return {"base_station": list(db_bs)}
+
+
 @api_router.get("/bs/{bs_id}", status_code=200, response_model=schemas.BaseStation)
 def read_bs(bs_id: int, db: Session = Depends(get_db)):
     db_bs = crud.get_bs(db, bs_id=bs_id)
