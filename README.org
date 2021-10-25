@@ -1,0 +1,19 @@
+#+TITLE: Objectives API
+
+* API Content
+  API provides some data from experiment for *Distributed Deep Neural Networks
+  for Network Slice Management*. Data are produced from original
+  [[https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/EGZHFV][Telecommunication Dataset]].
+
+* List of API calls
+  To see all possible API calls and example returns see
+  [[http://localhost:8000/docs]] after running the API server.
+
+* Run the code
+  Code runs with Python version 3.10. You need to install all necessary packages
+  from file://./requirements.txt.
+  
+  From the file://./ run command:
+  #+BEGIN_SRC shell
+  uvicorn api.main:app --reload
+  #+END_SRC
