@@ -1,6 +1,5 @@
-from typing import List
-
 from fastapi import Depends, FastAPI, HTTPException, APIRouter
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from . import crud, models, schemas
@@ -11,6 +10,21 @@ models.Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 api_router = APIRouter()
+
+
+origins = [
+    "http://localhost",
+    "http://localhost:8000",
+    "http://localhost:8080",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # Dependency
@@ -39,14 +53,14 @@ def read_bs(bs_id: int, db: Session = Depends(get_db)):
 
 
 @api_router.get("/slice/{slice_id}", status_code=200, response_model=schemas.BaseStationResults)
-def search_recipes(slice_id: int, db: Session = Depends(get_db)) -> dict:
+def read_slice(slice_id: int, db: Session = Depends(get_db)) -> dict:
     db_slice = crud.get_slice(db, slice_id=slice_id)
     if db_slice is None:
         raise HTTPException(status_code=404, detail="Slice not found")
     return {"base_station": list(db_slice)}
 
 
-@app.get("/timesteps", status_code=200, response_model=schemas.TiemstepResults)
+@app.get("/timesteps", status_code=200, response_model=schemas.TimestepResults)
 def read_timesteps(db: Session = Depends(get_db)):
     db_timesteps = crud.get_timesteps(db)
     if db_timesteps is None:
@@ -54,7 +68,7 @@ def read_timesteps(db: Session = Depends(get_db)):
     return {"time_series": list(db_timesteps)}
 
 
-@app.get("/timesteps/time={time}", status_code=200, response_model=schemas.TiemstepResults)
+@app.get("/timesteps/time={time}", status_code=200, response_model=schemas.TimestepResults)
 def read_timesteps(time: int, db: Session = Depends(get_db)):
     db_timesteps = crud.get_timesteps(db, time=time)
     if db_timesteps is None:
@@ -62,7 +76,7 @@ def read_timesteps(time: int, db: Session = Depends(get_db)):
     return {"time_series": list(db_timesteps)}
 
 
-@app.get("/timesteps/time={time}/window={window}", status_code=200, response_model=schemas.TiemstepResults)
+@app.get("/timesteps/time={time}/window={window}", status_code=200, response_model=schemas.TimestepResults)
 def read_timesteps(time: int, window: int, db: Session = Depends(get_db)):
     db_timesteps = crud.get_timesteps(db, time=time, window=window)
     if db_timesteps is None:

@@ -68,5 +68,5 @@ class Timestep(TimestepBase):
         orm_mode = True
 
 
-class TiemstepResults(BaseModel):
+class TimestepResults(BaseModel):
     time_series: Sequence[Timestep]
