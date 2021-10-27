@@ -3,6 +3,8 @@
 * API Content
   API provides some data from experiment for *Distributed Deep Neural Networks
   for Network Slice Management*. Data are produced from original
+  [[http://www.telecomitalia.com/tit/en/bigdatachallenge.html][from BigDataChallenge contest]]
+  ([[http://theodi.fbk.eu/][ODI node Trento]]) obtained at
   [[https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/EGZHFV][Telecommunication Dataset]].
 
 * List of API calls
